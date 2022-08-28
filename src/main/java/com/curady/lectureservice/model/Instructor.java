@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -31,8 +32,8 @@ public class Instructor {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToOne(mappedBy = "instructor")
-    private Lecture lecture;
+    @OneToMany(mappedBy = "instructor")
+    private List<Lecture> lectures;
 }
 
 

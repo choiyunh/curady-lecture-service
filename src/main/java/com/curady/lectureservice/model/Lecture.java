@@ -61,7 +61,7 @@ public class Lecture {
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 }

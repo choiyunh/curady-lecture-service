@@ -3,7 +3,7 @@ package com.curady.lectureservice.controller;
 import com.curady.lectureservice.mapper.LectureMapper;
 import com.curady.lectureservice.model.Lecture;
 import com.curady.lectureservice.service.LectureService;
-import com.curady.lectureservice.vo.ResponseLectures;
+import com.curady.lectureservice.vo.ResponseLecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -33,10 +33,22 @@ public class LectureController {
 
 
     @GetMapping("/lecture")
-    public ResponseEntity<List<ResponseLectures>> getUsers() {
+    public ResponseEntity<List<ResponseLecture>> getAllLectures() {
         Iterable<Lecture> lectures = lectureService.getAllLectures();
 
-        List<ResponseLectures> result = new ArrayList<>();
+        List<ResponseLecture> result = new ArrayList<>();
+        lectures.forEach(v -> {
+            result.add(LectureMapper.INSTANCE.entityToResponse(v));
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping("/lecture/{subCategoryId}")
+    public ResponseEntity<List<ResponseLecture>> getLecturesBySubCategory(@PathVariable Long subCategoryId) {
+        Iterable<Lecture> lectures = lectureService.getLecturesBySubCategory(subCategoryId);
+
+        List<ResponseLecture> result = new ArrayList<>();
         lectures.forEach(v -> {
             result.add(LectureMapper.INSTANCE.entityToResponse(v));
         });

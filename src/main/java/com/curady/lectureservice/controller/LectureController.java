@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lecture-service")
 public class LectureController {
     Environment env;
     LectureService lectureService;

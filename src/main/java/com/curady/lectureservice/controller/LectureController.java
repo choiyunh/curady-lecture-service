@@ -42,16 +42,4 @@ public class LectureController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
-    @GetMapping("/lecture/{subCategoryId}")
-    public ResponseEntity<List<ResponseLecture>> getLecturesBySubCategory(@PathVariable Long subCategoryId) {
-        Iterable<Lecture> lectures = lectureService.getLecturesBySubCategory(subCategoryId);
-
-        List<ResponseLecture> result = new ArrayList<>();
-        lectures.forEach(v -> {
-            result.add(LectureMapper.INSTANCE.entityToResponse(v));
-        });
-
-        return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
 }

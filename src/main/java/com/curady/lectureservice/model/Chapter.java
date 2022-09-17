@@ -21,6 +21,6 @@ public class Chapter {
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
 
-    @OneToMany(mappedBy = "chapter")
-    private List<ChapterSubchapter> chapterSubchapters = new ArrayList<>();
+    @Column
+    private Long parentId = 0L;
 }

@@ -1,5 +1,7 @@
-package com.curady.lectureservice.model;
+package com.curady.lectureservice.domain.tag.model;
 
+
+import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,8 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "chapter")
-public class Chapter {
+@Table(name = "tag")
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,10 +19,6 @@ public class Chapter {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "lecture_id")
-    private Lecture lecture;
-
-    @Column
-    private Long parentId = 0L;
+    @OneToMany(mappedBy = "tag")
+    private List<LectureTag> lectureTags = new ArrayList<>();
 }

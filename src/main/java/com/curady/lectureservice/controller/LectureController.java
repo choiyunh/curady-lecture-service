@@ -1,9 +1,9 @@
 package com.curady.lectureservice.controller;
 
 import com.curady.lectureservice.mapper.LectureMapper;
-import com.curady.lectureservice.model.Lecture;
-import com.curady.lectureservice.service.LectureService;
-import com.curady.lectureservice.vo.ResponseLecture;
+import com.curady.lectureservice.domain.lecture.model.Lecture;
+import com.curady.lectureservice.domain.lecture.service.LectureService;
+import com.curady.lectureservice.web.main.dto.ResponseLecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;

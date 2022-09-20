@@ -1,5 +1,7 @@
-package com.curady.lectureservice.model;
+package com.curady.lectureservice.domain.lectureTag.model;
 
+import com.curady.lectureservice.domain.tag.model.Tag;
+import com.curady.lectureservice.domain.lecture.model.Lecture;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

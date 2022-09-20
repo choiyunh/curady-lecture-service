@@ -1,5 +1,6 @@
-package com.curady.lectureservice.model;
+package com.curady.lectureservice.domain.instructor.model;
 
+import com.curady.lectureservice.domain.lecture.model.Lecture;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

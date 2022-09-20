@@ -1,8 +1,9 @@
-package com.curady.lectureservice.service;
+package com.curady.lectureservice.domain.lecture.service;
 
-import com.curady.lectureservice.model.Lecture;
-import com.curady.lectureservice.repository.CategoryRepository;
-import com.curady.lectureservice.repository.LectureRepository;
+import com.curady.lectureservice.domain.lecture.model.Lecture;
+import com.curady.lectureservice.domain.category.repository.CategoryRepository;
+import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
+import com.curady.lectureservice.domain.lecture.service.LectureService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

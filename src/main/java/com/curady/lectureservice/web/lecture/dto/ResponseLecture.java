@@ -17,7 +17,7 @@ public class ResponseLecture {
     private String description;
     private Integer salePrice;
     private Integer deadline;
-    private String info;
+    private String infoPath;
     private String infoImagePath;
     private Integer level;
 

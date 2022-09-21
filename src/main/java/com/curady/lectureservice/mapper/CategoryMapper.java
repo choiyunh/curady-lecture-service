@@ -11,5 +11,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+    @Mapping(target = "id", source = "categoryId")
     List<ResponseCategory> categoryToResponse(List<Category> category);
 }

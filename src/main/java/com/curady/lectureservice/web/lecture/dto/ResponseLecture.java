@@ -1,4 +1,4 @@
-package com.curady.lectureservice.web.main.dto;
+package com.curady.lectureservice.web.lecture.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

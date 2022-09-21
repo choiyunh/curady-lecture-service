@@ -1,7 +1,11 @@
 package com.curady.lectureservice.domain.lecture.service;
 
-import com.curady.lectureservice.domain.lecture.model.Lecture;
+import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
+
+import java.util.List;
 
 public interface LectureService {
-    Iterable<Lecture> getAllLectures();
+    List<ResponseLecture> getAllLectures();
+
+    List<ResponseLecture> getLecturesByCategoryId(Long categoryId);
 }

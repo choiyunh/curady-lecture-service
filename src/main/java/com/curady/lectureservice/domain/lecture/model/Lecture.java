@@ -55,7 +55,7 @@ public class Lecture {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "lecture")
+    @OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
     private List<LectureTag> lectureTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "lecture")

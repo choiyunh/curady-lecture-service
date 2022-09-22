@@ -1,12 +1,13 @@
 package com.curady.lectureservice.web.lecture.dto;
 
-import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseLecture {
     private Long id;
@@ -22,5 +23,5 @@ public class ResponseLecture {
     private Integer level;
 
     private String instructorName;
-    private List<LectureTag> lectureTags;
+    private List<ResponseTag> lectureTags;
 }

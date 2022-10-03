@@ -11,6 +11,8 @@ import com.curady.lectureservice.web.lecture.dto.ResponseTag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,18 +27,19 @@ public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
 
     @Override
-    public List<ResponseLectures> getAllLectures() {
-        return LectureMapper.INSTANCE.lecturesToResponses(lectureRepository.findAll());
+    @Transactional
+    public List<ResponseLectures> getAllLectures(Pageable pageable) {
+        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAll(pageable).getContent());
     }
 
     @Override
     public List<ResponseLectures> getLecturesByCategoryId(Long categoryId) {
-        return LectureMapper.INSTANCE.lecturesToResponses(lectureRepository.findAllByCategoryId(categoryId));
+        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAllByCategoryId(categoryId));
     }
 
     @Override
     public List<ResponseLectures> getLecturesByInstructorId(Long instructorId) {
-        return LectureMapper.INSTANCE.lecturesToResponses(lectureRepository.findAllByInstructorId(instructorId));
+        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAllByInstructorId(instructorId));
     }
 
     @Override

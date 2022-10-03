@@ -7,10 +7,13 @@ import com.curady.lectureservice.domain.lecture.service.LectureService;
 import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class LectureController {
@@ -18,8 +21,8 @@ public class LectureController {
     private final ResponseService responseService;
 
     @GetMapping("/lectures")
-    public MultipleResult<ResponseLectures> getAllLectures() {
-        List<ResponseLectures> responseLectures = lectureService.getAllLectures();
+    public MultipleResult<ResponseLectures> getAllLectures(Pageable pageable) {
+        List<ResponseLectures> responseLectures = lectureService.getAllLectures(pageable);
 
         return responseService.getMultipleResult(responseLectures);
     }

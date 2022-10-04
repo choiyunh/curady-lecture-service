@@ -1,5 +1,6 @@
 package com.curady.lectureservice.global.service;
 
+import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.global.result.MultipleResult;
 import com.curady.lectureservice.global.result.Result;
 import com.curady.lectureservice.global.result.SingleResult;
@@ -23,6 +24,15 @@ public class ResponseService {
     public <T> MultipleResult<T> getMultipleResult(List<T> data) {
         MultipleResult<T> result = new MultipleResult<>();
         setSuccessResult(result);
+        result.setData(data);
+
+        return result;
+    }
+
+    public <T> LecturesResult<T> getLecturesResult(int totalPage, List<T> data) {
+        LecturesResult<T> result = new LecturesResult<>();
+        setSuccessResult(result);
+        result.setTotalPage(totalPage);
         result.setData(data);
 
         return result;

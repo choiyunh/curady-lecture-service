@@ -9,7 +9,7 @@ import java.util.List;
 public interface LectureService {
     List<ResponseLectures> getAllLectures(Pageable pageable);
 
-    List<ResponseLectures> getLecturesByCategoryId(Long categoryId);
+    List<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable);
 
     List<ResponseLectures> getLecturesByInstructorId(Long instructorId);
 

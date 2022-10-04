@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
     Page<Lecture> findAll(Pageable pageable);
-    List<Lecture> findAllByCategoryId(Long categoryId, Pageable pageable);
+    Page<Lecture> findAllByCategoryId(Long categoryId, Pageable pageable);
 
     List<Lecture> findAllByInstructorId(Long instructorId);
 

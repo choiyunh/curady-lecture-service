@@ -4,6 +4,8 @@ import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
 import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
+import com.curady.lectureservice.global.result.LecturesResult;
+import com.curady.lectureservice.global.service.ResponseService;
 import com.curady.lectureservice.mapper.LectureMapper;
 import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
@@ -11,6 +13,7 @@ import com.curady.lectureservice.web.lecture.dto.ResponseTag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,22 +27,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
+    private final ResponseService responseService;
 
     @Override
     @Transactional
-    public List<ResponseLectures> getAllLectures(Pageable pageable) {
-        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAll(pageable).getContent());
+    public LecturesResult<ResponseLectures> getAllLectures(Pageable pageable) {
+        Page<Lecture> lecturePage = lectureRepository.findAll(pageable);
+        List<ResponseLectures> responseLectures =
+                LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
+
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
     }
 
     @Override
     @Transactional
-    public List<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable) {
-        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAllByCategoryId(categoryId, pageable));
+    public LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable) {
+        Page<Lecture> lecturePage = lectureRepository.findAllByCategoryId(categoryId, pageable);
+        List<ResponseLectures> responseLectures =
+                LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
+
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
     }
 
     @Override
     public List<ResponseLectures> getLecturesByInstructorId(Long instructorId) {
-        return LectureMapper.INSTANCE.lecturesToListResponses(lectureRepository.findAllByInstructorId(instructorId));
+        return LectureMapper.INSTANCE.lecturesToResponseList(lectureRepository.findAllByInstructorId(instructorId));
     }
 
     @Override

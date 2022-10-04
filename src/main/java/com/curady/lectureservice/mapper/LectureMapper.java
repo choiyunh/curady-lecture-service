@@ -19,5 +19,5 @@ public interface LectureMapper {
     ResponseLectures lectureToResponse(Lecture lecture);
 
     @IterableMapping(qualifiedByName = "E2R")
-    List<ResponseLectures> lecturesToListResponses(List<Lecture> lecture);
+    List<ResponseLectures> lecturesToResponseList(List<Lecture> lecture);
 }

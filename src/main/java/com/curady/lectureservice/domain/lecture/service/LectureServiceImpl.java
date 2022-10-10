@@ -1,8 +1,10 @@
 package com.curady.lectureservice.domain.lecture.service;
 
+import com.curady.lectureservice.domain.category.repository.CategoryRepository;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
 import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
+import com.curady.lectureservice.global.advice.exception.CategoryNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
 import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.global.service.ResponseService;
@@ -27,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
+    private final CategoryRepository categoryRepository;
     private final ResponseService responseService;
 
     @Override
@@ -42,6 +45,8 @@ public class LectureServiceImpl implements LectureService {
     @Override
     @Transactional
     public LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable) {
+        categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+
         Page<Lecture> lecturePage = lectureRepository.findAllByCategoryId(categoryId, pageable);
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());

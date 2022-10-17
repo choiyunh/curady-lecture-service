@@ -3,12 +3,15 @@ package com.curady.lectureservice.domain.lecture.service;
 import com.curady.lectureservice.domain.category.repository.CategoryRepository;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
+import com.curady.lectureservice.domain.lectureLog.model.LectureLog;
+import com.curady.lectureservice.domain.lectureLog.repository.LectureLogRepository;
 import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
 import com.curady.lectureservice.global.advice.exception.CategoryNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
 import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.global.service.ResponseService;
 import com.curady.lectureservice.mapper.LectureMapper;
+import com.curady.lectureservice.web.lecture.dto.RequestLecture;
 import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
 import com.curady.lectureservice.web.lecture.dto.ResponseTag;
@@ -31,6 +34,8 @@ public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
     private final CategoryRepository categoryRepository;
     private final ResponseService responseService;
+    private final LectureLogRepository lectureLogRepository;
+
 
     @Override
     @Transactional
@@ -61,8 +66,9 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     @Transactional
-    public ResponseLecture getLectureById(Long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new);
+    public ResponseLecture getLecture(RequestLecture requestLecture) {
+        Lecture lecture = lectureRepository.findById(requestLecture.getLectureId())
+                .orElseThrow(LectureNotFoundException::new);
         List<LectureTag> lectureTags = lecture.getLectureTags();
         List<ResponseTag> responseTags = new ArrayList<>();
         lectureTags.forEach(v -> {
@@ -72,6 +78,11 @@ public class LectureServiceImpl implements LectureService {
                             .tagName(v.getTag().getName())
                             .build());
         });
+        lectureLogRepository.save(
+                LectureLog.builder()
+                        .userId(requestLecture.getUserId())
+                        .lectureId(requestLecture.getLectureId())
+                        .build());
 
         return ResponseLecture.builder()
                 .id(lecture.getId())

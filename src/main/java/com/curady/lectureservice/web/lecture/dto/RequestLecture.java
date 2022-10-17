@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RequestLecture {
-    private Long userId;
+    private Long userId = 0L;
     private Long lectureId;
 }

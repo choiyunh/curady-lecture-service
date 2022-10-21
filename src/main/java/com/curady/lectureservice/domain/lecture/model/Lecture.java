@@ -4,8 +4,7 @@ import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
 import com.curady.lectureservice.domain.category.model.Category;
 import com.curady.lectureservice.domain.chapter.model.Chapter;
 import com.curady.lectureservice.domain.instructor.model.Instructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,9 +13,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "lecture")
 public class Lecture {
     @Id
@@ -55,17 +56,17 @@ public class Lecture {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "lecture", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "lecture")
     private List<LectureTag> lectureTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "lecture")
     private List<Chapter> chapters = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 }

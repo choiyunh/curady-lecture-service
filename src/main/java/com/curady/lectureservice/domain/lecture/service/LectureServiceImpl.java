@@ -3,6 +3,7 @@ package com.curady.lectureservice.domain.lecture.service;
 import com.curady.lectureservice.domain.category.repository.CategoryRepository;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
+import com.curady.lectureservice.domain.lecture.specification.LectureSpecification;
 import com.curady.lectureservice.domain.lectureLog.model.LectureLog;
 import com.curady.lectureservice.domain.lectureLog.repository.LectureLogRepository;
 import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
@@ -20,15 +21,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
@@ -36,11 +40,18 @@ public class LectureServiceImpl implements LectureService {
     private final ResponseService responseService;
     private final LectureLogRepository lectureLogRepository;
 
-
     @Override
-    @Transactional
-    public LecturesResult<ResponseLectures> getAllLectures(Pageable pageable) {
-        Page<Lecture> lecturePage = lectureRepository.findAll(pageable);
+    @Transactional(readOnly = true)
+    public LecturesResult<ResponseLectures> getAllLectures(Pageable pageable,
+                                                           Map<String, String> filterKeys) {
+        Specification<Lecture> specification = (root, query, criteriaBuilder) -> null;
+        if (filterKeys.get("level") != null) {
+            specification = specification.and(LectureSpecification.equalLectureLevel(Integer.valueOf(filterKeys.get("level"))));
+        }
+        if (filterKeys.get("price") != null) {
+            specification = specification.and(LectureSpecification.betweenPrice(Integer.valueOf(filterKeys.get("price"))));
+        }
+        Page<Lecture> lecturePage = lectureRepository.findAll(specification, pageable);
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
 
@@ -48,8 +59,10 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    @Transactional
-    public LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable) {
+    @Transactional(readOnly = true)
+    public LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId,
+                                                                    Pageable pageable,
+                                                                    Map<String, String> filterKeys) {
         categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
         Page<Lecture> lecturePage = lectureRepository.findAllByCategoryId(categoryId, pageable);

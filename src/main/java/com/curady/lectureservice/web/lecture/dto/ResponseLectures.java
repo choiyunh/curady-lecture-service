@@ -1,9 +1,11 @@
 package com.curady.lectureservice.web.lecture.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseLectures {
     private Long id;

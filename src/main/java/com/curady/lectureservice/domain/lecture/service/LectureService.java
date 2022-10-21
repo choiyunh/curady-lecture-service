@@ -7,13 +7,9 @@ import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LectureService {
-    LecturesResult<ResponseLectures> getAllLectures(Pageable pageable);
-
-    LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable);
-
-    List<ResponseLectures> getLecturesByInstructorId(Long instructorId);
-
+    LecturesResult<ResponseLectures> getLectures(Pageable pageable, Map<String, String> filterKeys);
     ResponseLecture getLecture(RequestLecture requestLecture);
 }

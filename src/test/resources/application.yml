@@ -5,13 +5,9 @@ spring:
   application:
     name: lecture-service
   jpa:
-    properties:
-      hibernate:
-        default_batch_fetch_size: 500
-        format_sql: true
-        show_sql: true
     open-in-view: false
     generate-ddl: true
+    show-sql: true
     hibernate:
       ddl-auto: update
   mvc:

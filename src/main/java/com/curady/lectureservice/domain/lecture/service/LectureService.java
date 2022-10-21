@@ -10,11 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface LectureService {
-    LecturesResult<ResponseLectures> getAllLectures(Pageable pageable, Map<String, String> filterKeys);
-
-    LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId, Pageable pageable, Map<String, String> filterKeys);
-
-    List<ResponseLectures> getLecturesByInstructorId(Long instructorId);
-
+    LecturesResult<ResponseLectures> getLectures(Pageable pageable, Map<String, String> filterKeys);
     ResponseLecture getLecture(RequestLecture requestLecture);
 }

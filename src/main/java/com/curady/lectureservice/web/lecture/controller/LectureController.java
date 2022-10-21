@@ -25,17 +25,9 @@ public class LectureController {
 
     @Operation(summary = "전체 강의 목록 조회(페이징 적용)", description = "강의의 전체 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")
     @GetMapping("/lectures")
-    public LecturesResult<ResponseLectures> getAllLectures(Pageable pageable,
+    public LecturesResult<ResponseLectures> getLectures(Pageable pageable,
                                                            @RequestParam(required = false) Map<String, String> filterKeys) {
-        return lectureService.getAllLectures(pageable, filterKeys);
-    }
-
-    @Operation(summary = "카테고리별 강의 목록 조회(페이징 적용)", description = "카테고리별 강의의 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")
-    @GetMapping("/lectures/{categoryId}")
-    public LecturesResult<ResponseLectures> getAllLecturesByCategoryId(@PathVariable Long categoryId,
-                                                                       Pageable pageable,
-                                                                       @RequestParam(required = false) Map<String, String> filterKeys) {
-        return lectureService.getLecturesByCategoryId(categoryId, pageable, filterKeys);
+        return lectureService.getLectures(pageable, filterKeys);
     }
 
     @Operation(summary = "강의 상세 조회", description = "강의의 id를 받아 해당 강의의 상세 정보를 조회, 조회 로그를 저장합니다.")

@@ -42,11 +42,19 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     @Transactional(readOnly = true)
-    public LecturesResult<ResponseLectures> getAllLectures(Pageable pageable,
+    public LecturesResult<ResponseLectures> getLectures(Pageable pageable,
                                                            Map<String, String> filterKeys) {
         Specification<Lecture> specification = (root, query, criteriaBuilder) -> null;
+        if (filterKeys.get("category") != null) {
+            categoryRepository.findById(Long.valueOf(filterKeys.get("category"))).orElseThrow(CategoryNotFoundException::new);
+            specification = specification.and(LectureSpecification.equalLectureCategory(Long.valueOf(filterKeys.get("category"))));
+        }
         if (filterKeys.get("level") != null) {
-            specification = specification.and(LectureSpecification.equalLectureLevel(Integer.valueOf(filterKeys.get("level"))));
+            List<Integer> levelList = new ArrayList<>();
+            for (String s : filterKeys.get("level").split(",")) {
+                levelList.add(Integer.valueOf(s));
+            }
+            specification = specification.and(LectureSpecification.equalLectureLevel(levelList));
         }
         if (filterKeys.get("price") != null) {
             specification = specification.and(LectureSpecification.betweenPrice(Integer.valueOf(filterKeys.get("price"))));
@@ -56,25 +64,6 @@ public class LectureServiceImpl implements LectureService {
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
 
         return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public LecturesResult<ResponseLectures> getLecturesByCategoryId(Long categoryId,
-                                                                    Pageable pageable,
-                                                                    Map<String, String> filterKeys) {
-        categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-
-        Page<Lecture> lecturePage = lectureRepository.findAllByCategoryId(categoryId, pageable);
-        List<ResponseLectures> responseLectures =
-                LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
-
-        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
-    }
-
-    @Override
-    public List<ResponseLectures> getLecturesByInstructorId(Long instructorId) {
-        return LectureMapper.INSTANCE.lecturesToResponseList(lectureRepository.findAllByInstructorId(instructorId));
     }
 
     @Override

@@ -8,13 +8,23 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class LectureSpecification {
-    public static Specification<Lecture> equalLectureLevel(Integer level) {
+    public static Specification<Lecture> equalLectureLevel(List<Integer> levelList) {
         return new Specification<Lecture>() {
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("level"), level);
+                return criteriaBuilder.and(root.get("level").in(levelList));
+            }
+        };
+    }
+
+    public static Specification<Lecture> equalLectureCategory(Long category) {
+        return new Specification<Lecture>() {
+            @Override
+            public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.equal(root.get("category"), category);
             }
         };
     }

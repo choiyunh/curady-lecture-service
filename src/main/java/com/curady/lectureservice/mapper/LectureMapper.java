@@ -1,7 +1,7 @@
 package com.curady.lectureservice.mapper;
 
 import com.curady.lectureservice.domain.lecture.model.Lecture;
-import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

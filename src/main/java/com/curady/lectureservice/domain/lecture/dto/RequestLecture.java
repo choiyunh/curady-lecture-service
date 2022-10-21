@@ -1,4 +1,4 @@
-package com.curady.lectureservice.web.lecture.dto;
+package com.curady.lectureservice.domain.lecture.dto;
 
 import lombok.Data;
 

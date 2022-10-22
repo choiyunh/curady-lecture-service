@@ -85,6 +85,7 @@ public class LectureServiceImpl implements LectureService {
                         .userId(requestLecture.getUserId())
                         .lectureId(requestLecture.getLectureId())
                         .build());
+        lecture.increaseViews();
 
         return ResponseLecture.builder()
                 .id(lecture.getId())

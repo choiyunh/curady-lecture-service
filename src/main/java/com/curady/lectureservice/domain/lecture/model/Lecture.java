@@ -48,6 +48,7 @@ public class Lecture {
     private String infoImagePath;
     @Column(nullable = false)
     private Integer level;
+    private Integer views = 0;
 
     @Column(nullable = false, updatable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
@@ -69,4 +70,8 @@ public class Lecture {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
+    public void increaseViews() {
+        this.views++;
+    }
 }

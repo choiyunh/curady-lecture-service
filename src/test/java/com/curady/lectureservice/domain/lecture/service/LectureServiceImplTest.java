@@ -3,7 +3,7 @@ package com.curady.lectureservice.domain.lecture.service;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
 import com.curady.lectureservice.mapper.LectureMapper;
-import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

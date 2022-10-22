@@ -1,12 +1,12 @@
-package com.curady.lectureservice.web.lecture.controller;
+package com.curady.lectureservice.domain.lecture.controller;
 
 import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.global.result.SingleResult;
 import com.curady.lectureservice.global.service.ResponseService;
 import com.curady.lectureservice.domain.lecture.service.LectureService;
-import com.curady.lectureservice.web.lecture.dto.RequestLecture;
-import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
-import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
+import com.curady.lectureservice.domain.lecture.dto.RequestLecture;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLecture;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

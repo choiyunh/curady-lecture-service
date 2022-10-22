@@ -12,10 +12,10 @@ import com.curady.lectureservice.global.advice.exception.LectureNotFoundExceptio
 import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.global.service.ResponseService;
 import com.curady.lectureservice.mapper.LectureMapper;
-import com.curady.lectureservice.web.lecture.dto.RequestLecture;
-import com.curady.lectureservice.web.lecture.dto.ResponseLecture;
-import com.curady.lectureservice.web.lecture.dto.ResponseLectures;
-import com.curady.lectureservice.web.lecture.dto.ResponseTag;
+import com.curady.lectureservice.domain.lecture.dto.RequestLecture;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLecture;
+import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
+import com.curady.lectureservice.domain.tag.dto.ResponseTag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

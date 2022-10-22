@@ -1,4 +1,4 @@
-package com.curady.lectureservice.web.lecture.dto;
+package com.curady.lectureservice.domain.category.dto;
 
 import lombok.Builder;
 import lombok.Getter;

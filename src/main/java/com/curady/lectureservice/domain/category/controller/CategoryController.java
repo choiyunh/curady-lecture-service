@@ -1,9 +1,9 @@
-package com.curady.lectureservice.web.lecture.controller;
+package com.curady.lectureservice.domain.category.controller;
 
 import com.curady.lectureservice.domain.category.service.CategoryService;
 import com.curady.lectureservice.global.result.MultipleResult;
 import com.curady.lectureservice.global.service.ResponseService;
-import com.curady.lectureservice.web.lecture.dto.ResponseCategory;
+import com.curady.lectureservice.domain.category.dto.ResponseCategory;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.curady.lectureservice.web.lecture.dto;
+package com.curady.lectureservice.domain.tag.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

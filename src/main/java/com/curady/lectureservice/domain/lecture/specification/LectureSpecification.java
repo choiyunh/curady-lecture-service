@@ -37,4 +37,22 @@ public class LectureSpecification {
             }
         };
     }
+
+    public static Specification<Lecture> likeLectureName(String searchWord) {
+        return new Specification<Lecture>() {
+            @Override
+            public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.like(root.get("name"), "%" + searchWord + "%");
+            }
+        };
+    }
+
+    public static Specification<Lecture> likeLectureDescription(String searchWord) {
+        return new Specification<Lecture>() {
+            @Override
+            public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.like(root.get("description"), "%" + searchWord + "%");
+            }
+        };
+    }
 }

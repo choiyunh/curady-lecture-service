@@ -43,7 +43,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     @Transactional(readOnly = true)
     public LecturesResult<ResponseLectures> getLectures(Pageable pageable,
-                                                           Map<String, String> filterKeys) {
+                                                        Map<String, String> filterKeys) {
         Specification<Lecture> specification = (root, query, criteriaBuilder) -> null;
         if (filterKeys.get("category") != null) {
             categoryRepository.findById(Long.valueOf(filterKeys.get("category"))).orElseThrow(CategoryNotFoundException::new);
@@ -58,6 +58,11 @@ public class LectureServiceImpl implements LectureService {
         }
         if (filterKeys.get("price") != null) {
             specification = specification.and(LectureSpecification.betweenPrice(Integer.valueOf(filterKeys.get("price"))));
+        }
+        if (filterKeys.get("word") != null) {
+            String searchWord = filterKeys.get("word").replaceAll(" ", "");
+            specification = specification.and(LectureSpecification.likeLectureName(searchWord)
+                    .or(LectureSpecification.likeLectureDescription(searchWord)));
         }
         Page<Lecture> lecturePage = lectureRepository.findAll(specification, pageable);
         List<ResponseLectures> responseLectures =

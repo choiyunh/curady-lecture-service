@@ -6,6 +6,7 @@ import com.curady.lectureservice.domain.likes.model.Likes;
 import com.curady.lectureservice.domain.likes.repository.LikesRepository;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LikesAlreadyExistsException;
+import com.curady.lectureservice.global.advice.exception.LikesNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class LikesService {
     private final LectureRepository lectureRepository;
 
     public void createLikes(String userId, Long lectureId) {
-        lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new);
+        verifyLecture(lectureId);
         Optional<Likes> likes = likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId);
         if (likes.isPresent()) {
             throw new LikesAlreadyExistsException();
@@ -29,6 +30,17 @@ public class LikesService {
                 .userId(Long.valueOf(userId))
                 .lectureId(lectureId)
                 .build());
+    }
+
+    public void deleteLikes(String userId, Long lectureId) {
+        verifyLecture(lectureId);
+        likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId)
+                .orElseThrow(LikesNotFoundException::new);
+        likesRepository.deleteByUserIdAndLectureId(Long.valueOf(userId), lectureId);
+    }
+
+    private void verifyLecture(Long lectureId) {
+        lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new);
     }
 }
 

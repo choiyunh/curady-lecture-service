@@ -7,8 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequiredArgsConstructor
 public class LikesController {
@@ -20,6 +18,14 @@ public class LikesController {
     public Result createLikes(@RequestHeader("X-Authorization-Id") String userId,
                               @PathVariable Long lectureId) {
         likesService.createLikes(userId, lectureId);
+        return responseService.getSuccessResult();
+    }
+
+    @Operation(summary = "강의 좋아요 삭제", description = "강의 좋아요 삭제")
+    @DeleteMapping("/auth/{lectureId}/likes")
+    public Result deleteLikes(@RequestHeader("X-Authorization-Id") String userId,
+                              @PathVariable Long lectureId) {
+        likesService.deleteLikes(userId, lectureId);
         return responseService.getSuccessResult();
     }
 }

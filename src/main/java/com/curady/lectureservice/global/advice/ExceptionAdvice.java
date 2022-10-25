@@ -3,6 +3,7 @@ package com.curady.lectureservice.global.advice;
 import com.curady.lectureservice.global.advice.exception.CategoryNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LikesAlreadyExistsException;
+import com.curady.lectureservice.global.advice.exception.LikesNotFoundException;
 import com.curady.lectureservice.global.result.Result;
 import com.curady.lectureservice.global.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,11 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.CONFLICT)
     public Result likesAlreadyExistsException() {
         return responseService.getFailureResult(-203, "이미 좋아요 한 강의입니다.");
+    }
+
+    @ExceptionHandler(LikesNotFoundException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Result likesNotFoundException() {
+        return responseService.getFailureResult(-204, "좋아요하지 않은 강의입니다.");
     }
 }

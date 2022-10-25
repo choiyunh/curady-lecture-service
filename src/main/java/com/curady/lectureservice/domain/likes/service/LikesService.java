@@ -39,6 +39,12 @@ public class LikesService {
         likesRepository.deleteByUserIdAndLectureId(Long.valueOf(userId), lectureId);
     }
 
+    public Boolean isLiked(String userId, Long lectureId) {
+        verifyLecture(lectureId);
+        return likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId).isPresent();
+    }
+
+
     private void verifyLecture(Long lectureId) {
         lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new);
     }

@@ -2,6 +2,7 @@ package com.curady.lectureservice.domain.likes.controller;
 
 import com.curady.lectureservice.domain.likes.service.LikesService;
 import com.curady.lectureservice.global.result.Result;
+import com.curady.lectureservice.global.result.SingleResult;
 import com.curady.lectureservice.global.service.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,12 @@ public class LikesController {
                               @PathVariable Long lectureId) {
         likesService.deleteLikes(userId, lectureId);
         return responseService.getSuccessResult();
+    }
+
+    @Operation(summary = "강의 좋아요 여부 반환", description = "강의 좋아요 여부 반환")
+    @GetMapping("/auth/{lectureId}/likes")
+    public SingleResult<Boolean> isLiked(@RequestHeader("X-Authorization-Id") String userId,
+                                         @PathVariable Long lectureId) {
+        return responseService.getSingleResult(likesService.isLiked(userId, lectureId));
     }
 }

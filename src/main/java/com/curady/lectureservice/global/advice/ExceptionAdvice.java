@@ -2,6 +2,7 @@ package com.curady.lectureservice.global.advice;
 
 import com.curady.lectureservice.global.advice.exception.CategoryNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
+import com.curady.lectureservice.global.advice.exception.LikesAlreadyExistsException;
 import com.curady.lectureservice.global.result.Result;
 import com.curady.lectureservice.global.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(LectureNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Result LectureNotFoundException() {
+    public Result lectureNotFoundException() {
         return responseService.getFailureResult(-201, "존재하지 않는 강의입니다.");
     }
 
@@ -25,5 +26,11 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Result categoryNotFoundException() {
         return responseService.getFailureResult(-202, "존재하지 않는 카테고리입니다.");
+    }
+
+    @ExceptionHandler(LikesAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Result likesAlreadyExistsException() {
+        return responseService.getFailureResult(-203, "이미 좋아요 한 강의입니다.");
     }
 }

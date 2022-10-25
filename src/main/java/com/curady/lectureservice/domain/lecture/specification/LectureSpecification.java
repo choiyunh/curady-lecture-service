@@ -4,10 +4,7 @@ package com.curady.lectureservice.domain.lecture.specification;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class LectureSpecification {
@@ -15,6 +12,10 @@ public class LectureSpecification {
         return new Specification<Lecture>() {
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                query.distinct(true);
+                if (Lecture.class.equals(query.getResultType())) {
+                    root.fetch("instructor", JoinType.LEFT);
+                }
                 return criteriaBuilder.and(root.get("level").in(levelList));
             }
         };
@@ -22,8 +23,13 @@ public class LectureSpecification {
 
     public static Specification<Lecture> equalLectureCategory(Long category) {
         return new Specification<Lecture>() {
+
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                query.distinct(true);
+                if (Lecture.class.equals(query.getResultType())) {
+                    root.fetch("instructor", JoinType.LEFT);
+                }
                 return criteriaBuilder.equal(root.get("category"), category);
             }
         };
@@ -33,6 +39,10 @@ public class LectureSpecification {
         return new Specification<Lecture>() {
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                query.distinct(true);
+                if (Lecture.class.equals(query.getResultType())) {
+                    root.fetch("instructor", JoinType.LEFT);
+                }
                 return criteriaBuilder.between(root.get("salePrice"), 0, salePrice);
             }
         };
@@ -42,6 +52,10 @@ public class LectureSpecification {
         return new Specification<Lecture>() {
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                query.distinct(true);
+                if (Lecture.class.equals(query.getResultType())) {
+                    root.fetch("instructor", JoinType.LEFT);
+                }
                 return criteriaBuilder.like(root.get("name"), "%" + searchWord + "%");
             }
         };

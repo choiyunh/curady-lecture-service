@@ -7,6 +7,8 @@ import com.curady.lectureservice.domain.lecture.specification.LectureSpecificati
 import com.curady.lectureservice.domain.lectureLog.model.LectureLog;
 import com.curady.lectureservice.domain.lectureLog.repository.LectureLogRepository;
 import com.curady.lectureservice.domain.lectureTag.model.LectureTag;
+import com.curady.lectureservice.domain.likes.model.Likes;
+import com.curady.lectureservice.domain.likes.repository.LikesRepository;
 import com.curady.lectureservice.global.advice.exception.CategoryNotFoundException;
 import com.curady.lectureservice.global.advice.exception.LectureNotFoundException;
 import com.curady.lectureservice.global.result.LecturesResult;
@@ -39,6 +41,7 @@ public class LectureServiceImpl implements LectureService {
     private final CategoryRepository categoryRepository;
     private final ResponseService responseService;
     private final LectureLogRepository lectureLogRepository;
+    private final LikesRepository likesRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -107,5 +110,20 @@ public class LectureServiceImpl implements LectureService {
                 .instructorName(lecture.getInstructor().getName())
                 .lectureTags(responseTags)
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LecturesResult<ResponseLectures> getLikedLectures(String userId, Pageable pageable) {
+        List<Likes> likes = likesRepository.findAllByUserId(Long.valueOf(userId));
+        List<Long> lectureIds = new ArrayList<>();
+        for (Likes like : likes) {
+            lectureIds.add(like.getLectureId());
+        }
+        Page<Lecture> lecturePage = lectureRepository.findAllByIdIn(lectureIds, pageable);
+
+        List<ResponseLectures> responseLectures =
+                LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
     }
 }

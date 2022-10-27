@@ -26,7 +26,7 @@ public class LectureController {
     @Operation(summary = "전체 강의 목록 조회(페이징 적용)", description = "강의의 전체 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")
     @GetMapping("/lectures")
     public LecturesResult<ResponseLectures> getLectures(Pageable pageable,
-                                                           @RequestParam(required = false) Map<String, String> filterKeys) {
+                                                        @RequestParam(required = false) Map<String, String> filterKeys) {
         return lectureService.getLectures(pageable, filterKeys);
     }
 
@@ -36,5 +36,12 @@ public class LectureController {
         ResponseLecture responseLecture = lectureService.getLecture(requestLecture);
 
         return responseService.getSingleResult(responseLecture);
+    }
+
+    @Operation(summary = "좋아요한 강의 목록 조회(페이징 적용)", description = "좋아요한 강의의 전체 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")
+    @GetMapping("/auth/lectures/liked")
+    public LecturesResult<ResponseLectures> getLikedLectures(@RequestHeader("X-Authorization-Id") String userId,
+                                                             Pageable pageable) {
+        return lectureService.getLikedLectures(userId, pageable);
     }
 }

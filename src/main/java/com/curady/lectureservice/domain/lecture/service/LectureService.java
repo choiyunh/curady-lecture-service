@@ -12,4 +12,5 @@ public interface LectureService {
     LecturesResult<ResponseLectures> getLectures(Pageable pageable, Map<String, String> filterKeys);
     ResponseLecture getLecture(RequestLecture requestLecture);
     LecturesResult<ResponseLectures> getLikedLectures(String userId, Pageable pageable);
+    LecturesResult<ResponseLectures> getCoursedLectures(String userId, Pageable pageable);
 }

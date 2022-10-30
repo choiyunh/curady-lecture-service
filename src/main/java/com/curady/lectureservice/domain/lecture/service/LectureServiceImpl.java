@@ -1,6 +1,8 @@
 package com.curady.lectureservice.domain.lecture.service;
 
 import com.curady.lectureservice.domain.category.repository.CategoryRepository;
+import com.curady.lectureservice.domain.course.model.Course;
+import com.curady.lectureservice.domain.course.repository.CourseRepository;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
 import com.curady.lectureservice.domain.lecture.specification.LectureSpecification;
@@ -18,6 +20,7 @@ import com.curady.lectureservice.domain.lecture.dto.RequestLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import com.curady.lectureservice.domain.tag.dto.ResponseTag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,7 @@ public class LectureServiceImpl implements LectureService {
     private final ResponseService responseService;
     private final LectureLogRepository lectureLogRepository;
     private final LikesRepository likesRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -119,6 +125,21 @@ public class LectureServiceImpl implements LectureService {
         List<Long> lectureIds = new ArrayList<>();
         for (Likes like : likes) {
             lectureIds.add(like.getLectureId());
+        }
+        Page<Lecture> lecturePage = lectureRepository.findAllByIdIn(lectureIds, pageable);
+
+        List<ResponseLectures> responseLectures =
+                LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LecturesResult<ResponseLectures> getCoursedLectures(String userId, Pageable pageable) {
+        List<Course> courses = courseRepository.findAllByUserId(Long.valueOf(userId));
+        List<Long> lectureIds = new ArrayList<>();
+        for (Course course : courses) {
+            lectureIds.add(course.getLectureId());
         }
         Page<Lecture> lecturePage = lectureRepository.findAllByIdIn(lectureIds, pageable);
 

@@ -44,4 +44,12 @@ public class LectureController {
                                                              Pageable pageable) {
         return lectureService.getLikedLectures(userId, pageable);
     }
+
+
+    @Operation(summary = "수강중인 강의 목록 조회(페이징 적용)", description = "수강중인 강의의 전체 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")
+    @GetMapping("/auth/lectures/coursed")
+    public LecturesResult<ResponseLectures> getCoursedLeectures(@RequestHeader("X-Authorization-Id") String userId,
+                                                                Pageable pageable) {
+        return lectureService.getCoursedLectures(userId, pageable);
+    }
 }

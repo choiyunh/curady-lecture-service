@@ -35,7 +35,7 @@ public class LectureSpecification {
         };
     }
 
-    public static Specification<Lecture> betweenPrice(Integer salePrice) {
+    public static Specification<Lecture> betweenPrice(int startPrice, int endPrice) {
         return new Specification<Lecture>() {
             @Override
             public Predicate toPredicate(Root<Lecture> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -43,7 +43,7 @@ public class LectureSpecification {
                 if (Lecture.class.equals(query.getResultType())) {
                     root.fetch("instructor", JoinType.LEFT);
                 }
-                return criteriaBuilder.between(root.get("salePrice"), 0, salePrice);
+                return criteriaBuilder.between(root.get("salePrice"), startPrice, endPrice);
             }
         };
     }

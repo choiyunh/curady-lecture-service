@@ -66,7 +66,13 @@ public class LectureServiceImpl implements LectureService {
             specification = specification.and(LectureSpecification.equalLectureLevel(levelList));
         }
         if (filterKeys.get("price") != null) {
-            specification = specification.and(LectureSpecification.betweenPrice(Integer.valueOf(filterKeys.get("price"))));
+            List<Integer> priceRange = new ArrayList<>();
+            for (String s : filterKeys.get("price").split(",")) {
+                priceRange.add(Integer.valueOf(s));
+            }
+            int start = priceRange.get(0);
+            int end = priceRange.get(1);
+            specification = specification.and(LectureSpecification.betweenPrice(start, end));
         }
         if (filterKeys.get("word") != null) {
             String searchWord = filterKeys.get("word").replaceAll(" ", "");

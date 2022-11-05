@@ -29,10 +29,11 @@ public class ResponseService {
         return result;
     }
 
-    public <T> LecturesResult<T> getLecturesResult(int totalPage, List<T> data) {
+    public <T> LecturesResult<T> getLecturesResult(int totalPage, long totalLecture, List<T> data) {
         LecturesResult<T> result = new LecturesResult<>();
         setSuccessResult(result);
         result.setTotalPage(totalPage);
+        result.setTotalLecture(totalLecture);
         result.setData(data);
 
         return result;

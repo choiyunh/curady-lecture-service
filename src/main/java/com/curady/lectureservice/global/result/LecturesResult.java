@@ -9,5 +9,6 @@ import java.util.List;
 @Setter
 public class LecturesResult <T> extends Result {
     private int totalPage;
+    private long totalLecture;
     private List<T> data;
 }

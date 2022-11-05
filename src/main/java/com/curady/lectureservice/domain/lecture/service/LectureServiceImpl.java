@@ -83,7 +83,7 @@ public class LectureServiceImpl implements LectureService {
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
 
-        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), lecturePage.getTotalElements(), responseLectures);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class LectureServiceImpl implements LectureService {
 
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
-        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), lecturePage.getTotalElements(), responseLectures);
     }
 
     @Override
@@ -151,6 +151,6 @@ public class LectureServiceImpl implements LectureService {
 
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
-        return responseService.getLecturesResult(lecturePage.getTotalPages(), responseLectures);
+        return responseService.getLecturesResult(lecturePage.getTotalPages(), lecturePage.getTotalElements(), responseLectures);
     }
 }

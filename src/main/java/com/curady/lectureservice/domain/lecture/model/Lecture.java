@@ -5,7 +5,9 @@ import com.curady.lectureservice.domain.category.model.Category;
 import com.curady.lectureservice.domain.chapter.model.Chapter;
 import com.curady.lectureservice.domain.instructor.model.Instructor;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -48,7 +50,10 @@ public class Lecture {
     private String infoImagePath;
     @Column(nullable = false)
     private Integer level;
-    private Integer views = 0;
+    @ColumnDefault("0")
+    private Integer views;
+    @ColumnDefault("0")
+    private Integer likes;
 
     @Column(nullable = false, updatable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp

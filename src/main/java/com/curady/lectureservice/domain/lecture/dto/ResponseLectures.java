@@ -14,4 +14,6 @@ public class ResponseLectures {
     private String vendorName;
     private String instructorName;
     private Integer salePrice;
+    private Integer views;
+    private Integer likes;
 }

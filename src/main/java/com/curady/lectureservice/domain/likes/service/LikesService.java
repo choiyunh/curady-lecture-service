@@ -21,7 +21,7 @@ public class LikesService {
     private final LectureRepository lectureRepository;
 
     public void createLikes(String userId, Long lectureId) {
-        verifyLecture(lectureId);
+        lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new).increaseLikes();
         Optional<Likes> likes = likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId);
         if (likes.isPresent()) {
             throw new LikesAlreadyExistsException();
@@ -33,17 +33,17 @@ public class LikesService {
     }
 
     public void deleteLikes(String userId, Long lectureId) {
-        verifyLecture(lectureId);
+        lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new).decreaseLikes();
         likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId)
                 .orElseThrow(LikesNotFoundException::new);
         likesRepository.deleteByUserIdAndLectureId(Long.valueOf(userId), lectureId);
     }
 
+    @Transactional(readOnly = true)
     public Boolean isLiked(String userId, Long lectureId) {
         verifyLecture(lectureId);
         return likesRepository.findByUserIdAndLectureId(Long.valueOf(userId), lectureId).isPresent();
     }
-
 
     private void verifyLecture(Long lectureId) {
         lectureRepository.findById(lectureId).orElseThrow(LectureNotFoundException::new);

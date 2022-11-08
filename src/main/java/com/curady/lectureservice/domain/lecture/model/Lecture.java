@@ -79,4 +79,6 @@ public class Lecture {
     public void increaseViews() {
         this.views++;
     }
+    public void increaseLikes() { this.likes++; }
+    public void decreaseLikes() { this.likes--; }
 }

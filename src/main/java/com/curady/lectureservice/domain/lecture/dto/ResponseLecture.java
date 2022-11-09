@@ -23,6 +23,7 @@ public class ResponseLecture {
     private String infoImagePath;
     private Integer level;
 
+    private String categoryName;
     private String instructorName;
     private List<ResponseTag> lectureTags;
 }

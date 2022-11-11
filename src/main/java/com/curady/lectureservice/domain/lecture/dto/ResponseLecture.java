@@ -22,6 +22,7 @@ public class ResponseLecture {
     private String infoPath;
     private String infoImagePath;
     private Integer level;
+    private Integer likes;
 
     private Long categoryId;
     private String categoryName;

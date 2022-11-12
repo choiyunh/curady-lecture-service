@@ -119,7 +119,9 @@ public class LectureServiceImpl implements LectureService {
                 .infoPath(lecture.getInfo())
                 .infoImagePath(lecture.getInfoImagePath())
                 .level(lecture.getLevel())
+                .likes(lecture.getLikes())
                 .categoryName(lecture.getCategory().getName())
+                .categoryId((lecture.getCategory().getId()))
                 .instructorName(lecture.getInstructor().getName())
                 .lectureTags(responseTags)
                 .build();

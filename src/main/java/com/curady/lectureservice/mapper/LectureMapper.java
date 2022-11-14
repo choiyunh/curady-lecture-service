@@ -1,5 +1,6 @@
 package com.curady.lectureservice.mapper;
 
+import com.curady.lectureservice.domain.lecture.dto.ResponseNameVendor;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import org.mapstruct.IterableMapping;
@@ -14,10 +15,12 @@ import java.util.List;
 public interface LectureMapper {
     LectureMapper INSTANCE = Mappers.getMapper(LectureMapper.class);
 
-    @Named("E2R")
     @Mapping(target = "instructorName", source = "instructor.name")
     ResponseLectures lectureToResponse(Lecture lecture);
 
-    @IterableMapping(qualifiedByName = "E2R")
     List<ResponseLectures> lecturesToResponseList(List<Lecture> lecture);
+
+    ResponseNameVendor lectureToNameVendor(Lecture lecture);
+
+    List<ResponseNameVendor> lecturesToNameVendorList(List<Lecture> lectures);
 }

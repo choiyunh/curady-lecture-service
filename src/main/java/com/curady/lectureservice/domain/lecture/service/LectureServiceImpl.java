@@ -3,6 +3,7 @@ package com.curady.lectureservice.domain.lecture.service;
 import com.curady.lectureservice.domain.category.repository.CategoryRepository;
 import com.curady.lectureservice.domain.course.model.Course;
 import com.curady.lectureservice.domain.course.repository.CourseRepository;
+import com.curady.lectureservice.domain.lecture.dto.ResponseNameVendor;
 import com.curady.lectureservice.domain.lecture.model.Lecture;
 import com.curady.lectureservice.domain.lecture.repository.LectureRepository;
 import com.curady.lectureservice.domain.lecture.specification.LectureSpecification;
@@ -20,7 +21,6 @@ import com.curady.lectureservice.domain.lecture.dto.RequestLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import com.curady.lectureservice.domain.tag.dto.ResponseTag;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +29,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,5 +153,12 @@ public class LectureServiceImpl implements LectureService {
         List<ResponseLectures> responseLectures =
                 LectureMapper.INSTANCE.lecturesToResponseList(lecturePage.getContent());
         return responseService.getLecturesResult(lecturePage.getTotalPages(), lecturePage.getTotalElements(), responseLectures);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResponseNameVendor> getLectureNameAndVendor(List<Long> lectureIdList) {
+        List<Lecture> lectures = lectureRepository.findAllByIdIn(lectureIdList);
+        return LectureMapper.INSTANCE.lecturesToNameVendorList(lectures);
     }
 }

@@ -1,11 +1,13 @@
 package com.curady.lectureservice.domain.lecture.service;
 
+import com.curady.lectureservice.domain.lecture.dto.ResponseNameVendor;
 import com.curady.lectureservice.global.result.LecturesResult;
 import com.curady.lectureservice.domain.lecture.dto.RequestLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLecture;
 import com.curady.lectureservice.domain.lecture.dto.ResponseLectures;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LectureService {
@@ -13,4 +15,5 @@ public interface LectureService {
     ResponseLecture getLecture(RequestLecture requestLecture);
     LecturesResult<ResponseLectures> getLikedLectures(String userId, Pageable pageable);
     LecturesResult<ResponseLectures> getCoursedLectures(String userId, Pageable pageable);
+    List<ResponseNameVendor> getLectureNameAndVendor(List<Long> lectureIdList);
 }

@@ -1,6 +1,8 @@
 package com.curady.lectureservice.domain.lecture.controller;
 
+import com.curady.lectureservice.domain.lecture.dto.ResponseNameVendor;
 import com.curady.lectureservice.global.result.LecturesResult;
+import com.curady.lectureservice.global.result.MultipleResult;
 import com.curady.lectureservice.global.result.SingleResult;
 import com.curady.lectureservice.global.service.ResponseService;
 import com.curady.lectureservice.domain.lecture.service.LectureService;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -36,6 +39,11 @@ public class LectureController {
         ResponseLecture responseLecture = lectureService.getLecture(requestLecture);
 
         return responseService.getSingleResult(responseLecture);
+    }
+
+    @PostMapping("/lecture/name/vendor")
+    public MultipleResult<ResponseNameVendor> getLectureNameAndVendor(@RequestBody List<Long> lectureIdList) {
+        return responseService.getMultipleResult(lectureService.getLectureNameAndVendor(lectureIdList));
     }
 
     @Operation(summary = "좋아요한 강의 목록 조회(페이징 적용)", description = "좋아요한 강의의 전체 목록을 페이지별로 반환합니다. page의 기본값은 1, size는 24, sort는 id,ASC")

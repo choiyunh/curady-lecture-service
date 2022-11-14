@@ -13,9 +13,11 @@ import java.util.Optional;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long>, JpaSpecificationExecutor<Lecture> {
     Page<Lecture> findAll(Specification<Lecture> specification, Pageable pageable);
-    
+
     @Query("select l from Lecture l join fetch l.category join fetch l.instructor where l.id = :lectureId")
     Optional<Lecture> findById(Long lectureId);
 
     Page<Lecture> findAllByIdIn(List<Long> lectureIds, Pageable pageable);
+
+    List<Lecture> findAllByIdIn(List<Long> lectureIds);
 }
